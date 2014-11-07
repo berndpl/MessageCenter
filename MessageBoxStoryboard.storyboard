@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="I1u-vs-YWc">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <scenes>
+        <!--Message Box-->
+        <scene sceneID="yND-Af-KcO">
+            <objects>
+                <viewController storyboardIdentifier="MessageBox" useStoryboardIdentifierAsRestorationIdentifier="YES" id="I1u-vs-YWc" customClass="MessageBox" customModule="Nexts" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nH0-O8-dly"/>
+                        <viewControllerLayoutGuide type="bottom" id="lCx-fT-UKW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="e2n-oo-NBZ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ucW-XT-uCh">
+                                <rect key="frame" x="60" y="130" width="480" height="40"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Please note that iBeacon functionality works only when the app is in the foreground">
+                                        <attributes>
+                                            <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <font key="NSFont" size="17" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.94117653369999998" green="0.70588237050000002" blue="0.58823531870000001" alpha="1" colorSpace="deviceRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="ucW-XT-uCh" secondAttribute="centerX" id="32e-4A-RzN"/>
+                            <constraint firstItem="ucW-XT-uCh" firstAttribute="width" secondItem="e2n-oo-NBZ" secondAttribute="width" multiplier="0.8" id="Be3-eX-pQ5"/>
+                            <constraint firstAttribute="centerY" secondItem="ucW-XT-uCh" secondAttribute="centerY" multiplier="2" id="Gvc-ET-EXQ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="messageLabel" destination="ucW-XT-uCh" id="Grf-lN-Hb6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hhS-L7-A9P" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="243" y="176"/>
+        </scene>
+    </scenes>
+</document>
