@@ -16,7 +16,7 @@ class MessageBox: UIViewController, UIGestureRecognizerDelegate {
     
     func tapMessageBox(sender: AnyObject) {
         Logger.log(logSwitch, logMessage: "tap")
-        hideMessageBox()
+        hideMessageBoxWithDuration(duration: 0.2)
     }
     
     var tapGesture:UITapGestureRecognizer?    
@@ -27,9 +27,6 @@ class MessageBox: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackground", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"prepareMessageBox:", name: "showMessageBox", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"hideMessageBox", name: "hideMessageBox", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"resetTimer", name: "showMessageBoxResetTimer", object: nil)
         
         self.tapGesture = UITapGestureRecognizer(target: self, action: "tapMessageBox:")
         self.view.addGestureRecognizer(self.tapGesture!)
@@ -62,7 +59,7 @@ class MessageBox: UIViewController, UIGestureRecognizerDelegate {
         
         var characterPerSecond:Double = 0.08 //Standard 0.05
         
-        let stringToCount = message.messageText as String
+        let stringToCount = message.messageText.string as String
         var stringCount:Int = countElements(stringToCount)
         var timeToShow:Double = Double(stringCount) * Double(characterPerSecond)
         
@@ -74,7 +71,7 @@ class MessageBox: UIViewController, UIGestureRecognizerDelegate {
         
         Logger.log(logSwitch, logMessage: "Calculated Time \(timeToShow)")
         
-        messageLabel.text = message.messageText
+        messageLabel.attributedText = message.messageText
         MessageCenter.shared.removeMessageFromQueue(message)
         activeMessage = true
         self.view.alpha = 0.0
@@ -91,8 +88,12 @@ class MessageBox: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func hideMessageBox() {
+        hideMessageBoxWithDuration()
+    }
+    
+    func hideMessageBoxWithDuration(duration:Double=0.8) {
         hideBoxTimer?.invalidate()
-        UIView.animateWithDuration(0.8, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+        UIView.animateWithDuration(duration, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
             Logger.log(self.logSwitch, logMessage: "[Message Box] Animate out ...")
             self.view.alpha = 0.0
             }) { (complete) -> Void in

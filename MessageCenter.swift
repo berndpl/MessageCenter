@@ -32,6 +32,8 @@ class MessageCenter: NSObject {
         messageBox = story.instantiateViewControllerWithIdentifier("MessageBox") as? MessageBox
         if messageBox != nil {
             backgroundView.addSubview(messageBox!.view)
+            //backgroundView.sendSubviewToBack(messageBox!.view)
+            backgroundView.bringSubviewToFront(backgroundView.viewWithTag(9999)!)
             println("[Message] Add view")
         } else {
             println("[Message] Setup no box?")

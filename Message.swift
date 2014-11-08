@@ -8,9 +8,9 @@ import UIKit
 
 class Message: NSObject {
     
-    var messageText:NSString = ""
+    var messageText:NSAttributedString = NSAttributedString()
     
-    convenience init(messageText:NSString) {
+    convenience init(messageText:NSAttributedString) {
         self.init()
         self.messageText = messageText
     }
