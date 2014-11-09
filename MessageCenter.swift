@@ -8,7 +8,7 @@ import UIKit
 
 class MessageCenter: NSObject {
     
-    let logSwitch:Bool = true
+    let logSwitch:Bool = false
     
     var messageQueue:NSMutableArray = NSMutableArray()
     var messageBox:MessageBox?
@@ -34,9 +34,9 @@ class MessageCenter: NSObject {
             backgroundView.addSubview(messageBox!.view)
             //backgroundView.sendSubviewToBack(messageBox!.view)
             backgroundView.bringSubviewToFront(backgroundView.viewWithTag(9999)!)
-            println("[Message] Add view")
+            Logger.log(logSwitch, logMessage: "[Message] Add view")
         } else {
-            println("[Message] Setup no box?")
+            Logger.log(logSwitch, logMessage: "[Message] Setup no box?")
         }
         resetQueue()
     }
@@ -48,15 +48,15 @@ class MessageCenter: NSObject {
     }
     
     func show() {
-        println("[Message] Show Next (\(messageQueue.count))")
+        Logger.log(logSwitch, logMessage: "[Message] Show Next (\(messageQueue.count))")
         simpleDescription()
         var nextMessage:Message? = messageQueue.firstObject as? Message
         if nextMessage != nil {
             if messageBox?.activeMessage == false || messageBox?.activeMessage == nil {
-                println("[Message] Show (\(nextMessage!.simpleDescription()))")
+                Logger.log(logSwitch, logMessage: "[Message] Show (\(nextMessage!.simpleDescription()))")
                 messageBox?.showMessage(nextMessage!)
             } else {
-                println("[Message] Delayed (\(nextMessage!.simpleDescription()))")
+                Logger.log(logSwitch, logMessage: "[Message] Delayed (\(nextMessage!.simpleDescription()))")
             }
         }
     }

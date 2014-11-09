@@ -8,7 +8,7 @@ import UIKit
 
 class MessageBox: UIViewController, UIGestureRecognizerDelegate {
 
-    let logSwitch:Bool = true
+    let logSwitch:Bool = false
     
     var hideBoxTimer:NSTimer?
     @IBOutlet var messageLabel: UILabel!
@@ -31,7 +31,7 @@ class MessageBox: UIViewController, UIGestureRecognizerDelegate {
         self.tapGesture = UITapGestureRecognizer(target: self, action: "tapMessageBox:")
         self.view.addGestureRecognizer(self.tapGesture!)
 
-        messageLabel?.font = UIFont.defaultFontWithSize(Settings.styleCalculatedLineSize(18.0, referenceView: view))
+        messageLabel?.font = UIFont.defaultFontWithSize(DefaultStyle.styleCalculatedLineSize(18.0, referenceView: view))
         //messageLabel?.font = UIFont.defaultFontWithSize(18.0)
         messageLabel?.textColor = UIColor.nextsLightHighlightColor()
         view.backgroundColor = UIColor.clearColor()
@@ -41,7 +41,7 @@ class MessageBox: UIViewController, UIGestureRecognizerDelegate {
     
     func resetTimer() {
         hideBoxTimer?.invalidate()
-        hideBoxTimer = NSTimer.scheduledTimerWithTimeInterval(Settings.animationHideDelay(), target: self, selector: "hideMessageBox", userInfo: nil, repeats: false)
+        hideBoxTimer = NSTimer.scheduledTimerWithTimeInterval(DefaultStyle.animationHideDelay(), target: self, selector: "hideMessageBox", userInfo: nil, repeats: false)
     }
     
     func willEnterForeground() {
