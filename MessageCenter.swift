@@ -43,8 +43,20 @@ class MessageCenter: NSObject {
     
     func addMessage(message:Message) {
         Logger.log(logSwitch, logMessage: "[Message] Adding (\(message.simpleDescription())))")
-        messageQueue.addObject(message)
+        if isSameMessageInQueueAlready(message) == false {
+            messageQueue.addObject(message)
+        }
         simpleDescription()
+    }
+    
+    func isSameMessageInQueueAlready(message:Message)->Bool {
+        for item:AnyObject in messageQueue {
+            let messageItem:Message = item as Message
+            if messageItem.messageText.isEqualToAttributedString(message.messageText){
+                return true
+            }
+        }
+        return false
     }
     
     func show() {
