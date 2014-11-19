@@ -8,11 +8,13 @@ import UIKit
 
 class MessageCenter: NSObject {
     
-    let logSwitch:Bool = false
+    let logSwitch:Bool = true
     
     var messageQueue:NSMutableArray = NSMutableArray()
-    var messageBox:MessageBox?
     var backgroundView:UIView?
+    var messageView:MessageView?
+    
+    var paused:Bool = false
     
     class var shared : MessageCenter {
         struct Singleton {
@@ -23,21 +25,21 @@ class MessageCenter: NSObject {
     
     override init() {
         super.init()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
         Logger.log(logSwitch, logMessage: "[MessageQueue] Init")
+    }
+    
+    func willEnterForeground() {
+        Logger.log(logSwitch, logMessage: "[MessageQueue] Foreground")
+        resume()
     }
     
     func setup (backgroundView:UIView) {
         self.backgroundView = backgroundView
-        var story:UIStoryboard = UIStoryboard(name: "MessageBoxStoryboard", bundle: nil)
-        messageBox = story.instantiateViewControllerWithIdentifier("MessageBox") as? MessageBox
-        if messageBox != nil {
-            backgroundView.addSubview(messageBox!.view)
-            //backgroundView.sendSubviewToBack(messageBox!.view)
-            backgroundView.bringSubviewToFront(backgroundView.viewWithTag(9999)!)
-            Logger.log(logSwitch, logMessage: "[Message] Add view")
-        } else {
-            Logger.log(logSwitch, logMessage: "[Message] Setup no box?")
-        }
+        
+        messageView = MessageView(frame: CGRectMake(0, 0, 100, 100))
+        messageView?.setup(backgroundView)
+        
         resetQueue()
     }
     
@@ -47,6 +49,24 @@ class MessageCenter: NSObject {
             messageQueue.addObject(message)
         }
         simpleDescription()
+    }
+    
+    func showMessage(message:Message) {
+        addMessage(message)
+        if paused == false {
+            show()
+        }
+    }
+    
+    func resume() {
+        paused = false
+        Logger.log(logSwitch, logMessage: "[MessageQueue] Resume (Pause \(paused))")
+        show()
+    }
+    
+    func pause() {
+        paused = true
+        Logger.log(logSwitch, logMessage: "[MessageQueue] Paused (Pause \(paused))")
     }
     
     func isSameMessageInQueueAlready(message:Message)->Bool {
@@ -60,15 +80,19 @@ class MessageCenter: NSObject {
     }
     
     func show() {
-        Logger.log(logSwitch, logMessage: "[Message] Show Next (\(messageQueue.count))")
-        simpleDescription()
-        var nextMessage:Message? = messageQueue.firstObject as? Message
-        if nextMessage != nil {
-            if messageBox?.activeMessage == false || messageBox?.activeMessage == nil {
-                Logger.log(logSwitch, logMessage: "[Message] Show (\(nextMessage!.simpleDescription()))")
-                messageBox?.showMessage(nextMessage!)
-            } else {
-                Logger.log(logSwitch, logMessage: "[Message] Delayed (\(nextMessage!.simpleDescription()))")
+        if messageView == nil {
+            println("[MessageCenter] Missing View for Message Box")
+        } else {
+            Logger.log(logSwitch, logMessage: "[Message] Show Next (\(messageQueue.count))")
+            simpleDescription()
+            var nextMessage:Message? = messageQueue.firstObject as? Message
+            if nextMessage != nil {
+                if messageView?.activeMessage == false || messageView?.activeMessage == nil {
+                    Logger.log(logSwitch, logMessage: "[Message] Show (\(nextMessage!.simpleDescription()))")
+                    messageView?.showMessage(nextMessage!)
+                } else {
+                    Logger.log(logSwitch, logMessage: "[Message] Delayed (\(nextMessage!.simpleDescription()))")
+                }
             }
         }
     }

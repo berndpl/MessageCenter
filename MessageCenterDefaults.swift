@@ -18,4 +18,16 @@ class MessageCenterDefaults: NSObject {
         return lineWidth * availableWidth / 288
     }
 
+    class func messageFont(size:CGFloat)->UIFont {
+        return UIFont(name: "Helvetica Neue", size: size)!
+    }
+    
+    class func messageFontSize()->CGFloat {
+        return 20.0
+    }
+    
+    class func lightColor()->UIColor {
+        return UIColor.whiteColor()
+    }
+
 }
