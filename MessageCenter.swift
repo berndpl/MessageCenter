@@ -8,7 +8,7 @@ import UIKit
 
 class MessageCenter: NSObject {
     
-    let logSwitch:Bool = true
+    let logSwitch:Bool = false
     
     var messageQueue:NSMutableArray = NSMutableArray()
     var backgroundView:UIView?
@@ -40,7 +40,7 @@ class MessageCenter: NSObject {
         messageView = MessageView(frame: CGRectMake(0, 0, 100, 100))
         messageView?.setup(backgroundView)
         
-        resetQueue()
+        reset()
     }
     
     func addMessage(message:Message) {
@@ -62,6 +62,12 @@ class MessageCenter: NSObject {
         paused = false
         Logger.log(logSwitch, logMessage: "[MessageQueue] Resume (Pause \(paused))")
         show()
+    }
+    
+    
+    func reset() {
+        messageView?.hideMessageBoxWithDuration(duration: 0.1)
+        messageQueue.removeAllObjects()
     }
     
     func pause() {
@@ -95,10 +101,6 @@ class MessageCenter: NSObject {
                 }
             }
         }
-    }
-    
-    func resetQueue() {
-        messageQueue.removeAllObjects()
     }
     
     func removeMessageFromQueue(message:Message) {

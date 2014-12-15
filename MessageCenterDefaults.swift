@@ -19,7 +19,7 @@ class MessageCenterDefaults: NSObject {
     }
 
     class func messageFont(size:CGFloat)->UIFont {
-        return UIFont(name: "Helvetica Neue", size: size)!
+        return UIFont(name: "HelveticaNeue-Medium", size: size)!
     }
     
     class func messageFontSize()->CGFloat {

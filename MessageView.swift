@@ -126,9 +126,9 @@ class MessageView: UIView {
     func setupLabel() {
         messageTextView.textAlignment = NSTextAlignment.Center
         messageTextView.editable = false
-        messageTextView.font = MessageCenterDefaults.messageFont(20.0)
+        messageTextView.font = MessageCenterDefaults.messageFont(18.0)
         messageTextView.textColor = MessageCenterDefaults.lightColor()
-        messageTextView.text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat."
+        messageTextView.text = "abc"
         messageTextView.backgroundColor = UIColor.clearColor()
         addSubview(messageTextView)
         
